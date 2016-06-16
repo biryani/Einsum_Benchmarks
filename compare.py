@@ -17,12 +17,15 @@ def compare_einsum_dot(n,k, repeat = 10,iterations = 100 ):
   indU = ind[-k:]
   indU = indU + range(n,n+k)
   t2 =  timeit.Timer(lambda:np.einsum(phi, ind, U, indU)).repeat(repeat,iterations)
-  return np.mean(t1)/float(iterations), np.mean(t2)/float(iterations)
+  return np.mean(t1), np.mean(t2)
 
+print "#n	k 	time_dot	time_ein"	
 
-
-Time = compare_einsum_dot(10,1,repeat = 3)
-print Time        
+for n in range(1,13):
+  for k in range(1,n+1):
+    time_dot , time_ein = compare_einsum_dot(n,k)
+    print n,'\t',k,'\t',time_dot,'\t', time_ein
+		   
 
 
 
